@@ -710,7 +710,9 @@ def gather_pool(expid, args, df_raw, df_cellbender, adqc, oufh = sys.stdout,lane
             if Donor_Stats['Donor id']!='':
                 # Only generate donor stats for the donors excluding unasigned and doublets. 
                 Pass_Fail='PASS'
+                Tranche_Pass_Fail='PASS'
                 Failure_Reason =' '
+                Trance_Failure_Reason=''
 
                 if (Median_UMIs_per_cell<=400):
                     Pass_Fail='FAIL'
@@ -725,10 +727,9 @@ def gather_pool(expid, args, df_raw, df_cellbender, adqc, oufh = sys.stdout,lane
                     Pass_Fail='FAIL'
                     Failure_Reason +='Donor_cells_for_donor<=400; '
                 
-                print("** Fraction_Reads_in_Cells : "+Fraction_Reads_in_Cells)
-                if (Fraction_Reads_in_Cells<=0.7):
+                if (float(Fraction_Reads_in_Cells.strip('%')/100)<=0.7):
                     Tranche_Pass_Fail='FAIL'
-                    Tranche_Failure_Reason +='Fraction of reads in cells for pool<=0.5; '
+                    Tranche_Failure_Reason +='Fraction of reads in cells for pool<=0.7; '
                 if (Mean_reads_per_cell<=25000):
                     Tranche_Pass_Fail='FAIL'
                     Trance_Failure_Reason +='Mean reads per cell for all cells in pool <=25000; '
@@ -768,8 +769,7 @@ def gather_pool(expid, args, df_raw, df_cellbender, adqc, oufh = sys.stdout,lane
                     'Cell types detected':Cell_types_detected,
                     'Cell type numbers':Cell_numbers,
                     'Tranche Pass/Fail':Tranche_Pass_Fail,
-                    'Tranche Failure Reason':Trance_Failure_Reason,
-                    
+                    'Tranche Failure Reason':Trance_Failure_Reason
                 }
 
                 Donor_Stats.update(Donor_Stats_extra)
@@ -815,6 +815,7 @@ def gather_pool(expid, args, df_raw, df_cellbender, adqc, oufh = sys.stdout,lane
         'Number of Reads':Number_of_Reads,
         'Fraction Reads in Cells':Fraction_Reads_in_Cells,
         'Mean Reads per Cell':Mean_reads_per_cell,
+        #'Tranche Pass/Fail':Tranche_Pass_Fail, & 'Tranche Failure Reason':Trance_Failure_Reason -> are in Donor_Stats_extra L748 ?
 
         'Median UMI Counts per Droplet before filter':Median_UMI_Counts_per_before_filter,
         'Median UMI Counts per Droplet after Cellranger filter':Median_UMI_Counts_per_cellranger,
