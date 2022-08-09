@@ -725,6 +725,7 @@ def gather_pool(expid, args, df_raw, df_cellbender, adqc, oufh = sys.stdout,lane
                     Pass_Fail='FAIL'
                     Failure_Reason +='Donor_cells_for_donor<=400; '
                 
+                print("** Fraction_Reads_in_Cells : "+Fraction_Reads_in_Cells)
                 if (Fraction_Reads_in_Cells<=0.7):
                     Tranche_Pass_Fail='FAIL'
                     Tranche_Failure_Reason +='Fraction of reads in cells for pool<=0.5; '
