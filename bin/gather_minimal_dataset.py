@@ -724,6 +724,13 @@ def gather_pool(expid, args, df_raw, df_cellbender, adqc, oufh = sys.stdout,lane
                 if (Donor_cells_for_donor<=400):
                     Pass_Fail='FAIL'
                     Failure_Reason +='Donor_cells_for_donor<=400; '
+                
+                if (Fraction_Reads_in_Cells<=0.7):
+                    Tranche_Pass_Fail='FAIL'
+                    Tranche_Failure_Reason +='Fraction of reads in cells for pool<=0.5; '
+                if (Mean_reads_per_cell<=25000):
+                    Tranche_Pass_Fail='FAIL'
+                    Trance_Failure_Reason +='Mean reads per cell for all cells in pool <=25000; '
             
                 try:
                     Date_sample_received = ' '
@@ -759,6 +766,8 @@ def gather_pool(expid, args, df_raw, df_cellbender, adqc, oufh = sys.stdout,lane
                     'QC Report end date':date_now,
                     'Cell types detected':Cell_types_detected,
                     'Cell type numbers':Cell_numbers,
+                    'Tranche Pass/Fail':Tranche_Pass_Fail,
+                    'Tranche Failure Reason':Trance_Failure_Reason,
                     
                 }
 
